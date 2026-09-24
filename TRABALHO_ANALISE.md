@@ -78,10 +78,13 @@ O trabalho está estruturado em 4 etapas cumulativas e obrigatórias:
   * Remoção fundamentada de registros duplicados pela chave `id_oferta`.
   * Conversão estrita de tipos (`preco_vista`, `valor_parcela` e `total_parcelado` para `float`; `qtd_parcelas` para `int`).
   * Tratamento documentado de valores ausentes (justificar no notebook se preencheu `desconto_perc` nulo com 0 ou se descartou linhas sem preço/título).
-* **Engenharia de Atributos (Feature Engineering):**
-  * **Extração Textual via Regex:** Extrair ao menos uma especificação técnica a partir do `nome_anuncio` (ex.: Armazenamento em GB para celulares/notebooks; Voltagem `110V/220V/Bivolt` para eletrodomésticos; Polegadas `"` para TVs; BTUs para Ar-Condicionado).
-  * **Custo Efetivo do Parcelamento:** Criar a feature `acrescimo_parcelamento_pct` calculada como:
-    $$\text{Acréscimo (\%)} = \left( \frac{\text{total\_parcelado} - \text{preco\_vista}}{\text{preco\_vista}} \right) \times 100$$
+
+**Engenharia de Atributos (Feature Engineering):** 
+* **Extração Textual via Regex:** Extrair ao menos uma especificação técnica a partir do `nome_anuncio` (ex.: Armazenamento em GB para celulares/notebooks; Voltagem 110V/220V/Bivolt para eletrodomésticos; Polegadas " para TVs; BTUs para Ar-Condicionado).
+* **Custo Efetivo do Parcelamento:** Criar a feature `acrescimo_parcelamento_pct` calculada como:
+
+$$\text{Acréscimo (\%)} = \left( \frac{\text{total\_parcelado} - \text{preco\_vista}}{\text{preco\_vista}} \right) \times 100$$
+    
   * **Posicionamento Relativo de Preço:** Criar indicador de desvio percentual do preço de cada item em relação à mediana da sua respectiva categoria.
 
 ### Etapa 3: Análise Descritiva e Exploração Estatística (Peso: 1,5 pontos)
@@ -95,7 +98,6 @@ Resolução obrigatória das 4 questões analíticas abaixo, acompanhadas de gr�
 
 ### Etapa 4: Conclusões Estratégicas e Relatório Técnico (Peso: 1,0 ponto)
 * Organização exemplar do Jupyter Notebook, intercalando células de código com explicações em Markdown analítico e fluido.
-* Seção final intitulada **"Recomendações para Precificação Dinâmica"**, sintetizando de 3 a 5 decisões práticas que um gestor de e-commerce/pricing deveria tomar com base nas evidências encontradas.
 
 ---
 
@@ -106,7 +108,7 @@ Resolução obrigatória das 4 questões analíticas abaixo, acompanhadas de gr�
 | **Pipeline e Ingestão** | Coleta automatizada com paginação funcional, mapeamento no esquema canônico e volume adequado de registros. | **1,0** |
 | **Data Wrangling e Regex** | Tratamento de nulos documentado, tipagem correta, deduplicação e extração bem-sucedida de features via Regex. | **1,5** |
 | **Profundidade Analítica** | Resolução completa das 2 questões com cálculos estatísticos precisos e gráficos elucidativos (eixos e títulos). | **1,5** |
-| **Storytelling e Conclusões** | Interpretação aplicada ao negócio, limpeza do código, organização do notebook e recomendações estratégicas fundamentadas. | **1,0** |
+| **Storytelling e Conclusões** | Interpretação aplicada ao negócio, limpeza do código, organização do notebook. | **1,0** |
 | **Total** | | **5,0** |
 
 ---
