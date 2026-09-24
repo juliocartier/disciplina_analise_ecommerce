@@ -85,14 +85,14 @@ O trabalho está estruturado em 4 etapas cumulativas e obrigatórias:
 
 $`\text{Acrescimo}(\%) = \left( \frac{\text{total\_parcelado} - \text{preco\_vista}}{\text{preco\_vista}} \right) \times 100`$
     
-  * **Posicionamento Relativo de Preço:** Criar indicador de desvio percentual do preço de cada item em relação à mediana da sua respectiva categoria.
 
 ### Etapa 3: Análise Descritiva e Exploração Estatística (Peso: 1,5 pontos)
-Resolução obrigatória das 4 questões analíticas abaixo, acompanhadas de gráficos interpretáveis (títulos, legendas e eixos identificados):
+Resolução obrigatória das 2 questões analíticas abaixo, acompanhadas de gráficos interpretáveis (títulos, legendas e eixos identificados):
 
 1. **Poder e Concentração de Lojas:**
    * Quais são as 5 lojas que concentram o maior número de ofertas em cada categoria?
-   * A loja com o maior volume de anúncios é necessariamente a mais barata? Compare a média e a mediana de preços praticadas pelos 5 principais lojistas.
+   * A loja com o maior volume de anúncios é necessariamente a mais barata? Compare a média dos preços praticadas pelos 5 principais lojistas.
+
 2. **Impacto da Modalidade Marketplace:**
    * Existe diferença estatisticamente perceptível no preço médio praticado por lojistas parceiros (`marketplace == True`) versus lojas próprias/oficiais (`marketplace == False`)?
 
@@ -107,7 +107,7 @@ Resolução obrigatória das 4 questões analíticas abaixo, acompanhadas de gr�
 | :--- | :--- | :---: |
 | **Pipeline e Ingestão** | Coleta automatizada com paginação funcional, mapeamento no esquema canônico e volume adequado de registros. | **1,0** |
 | **Data Wrangling e Regex** | Tratamento de nulos documentado, tipagem correta, deduplicação e extração bem-sucedida de features via Regex. | **1,5** |
-| **Profundidade Analítica** | Resolução completa das 2 questões com cálculos estatísticos precisos e gráficos elucidativos (eixos e títulos). | **1,5** |
+| **Profundidade Analítica** | Resolução exata das 2 questões (poder das lojas e impacto do marketplace), apresentando cálculos estatísticos corretos e interpretação coerente das médias de preço. | **1,5** |
 | **Storytelling e Conclusões** | Interpretação aplicada ao negócio, limpeza do código, organização do notebook. | **1,0** |
 | **Total** | | **5,0** |
 
@@ -115,8 +115,12 @@ Resolução obrigatória das 4 questões analíticas abaixo, acompanhadas de gr�
 
 ## 6. Instruções de Entrega
 
-1. **Prazo Improrrogável:** **07 de outubro, até as 23h59**.
+1. **Prazo Improrrogável:** **07 de outubro, até as 23h59**. Depois disso, a cada dia, redução de 0,5 Ponto.
+
 2. **Arquivos Exigidos:**
    * Notebook executado com todos os outputs pré-renderizados (`.ipynb`).
    * Base de dados tratada/coletada no formato `.csv`.
+
 3. **Originalidade:** Códigos clonados, duplicados ou com plágio detectado receberão nota **0,0 (zero)**.
+
+4. **Envio do código para um dos e-mails:** `juliocartier@gmail.com` ou `juliogomes@ce.senac.br` com o **Assunto** no e-mail TRABALHO ANALISE PREDITIVA - NOME DO ALUNO
