@@ -83,7 +83,7 @@ O trabalho está estruturado em 4 etapas cumulativas e obrigatórias:
 * **Extração Textual via Regex:** Extrair ao menos uma especificação técnica a partir do `nome_anuncio` (ex.: Armazenamento em GB para celulares/notebooks; Voltagem 110V/220V/Bivolt para eletrodomésticos; Polegadas " para TVs; BTUs para Ar-Condicionado).
 * **Custo Efetivo do Parcelamento:** Criar a feature `acrescimo_parcelamento_pct` calculada como:
 
-$$\text{Acréscimo (\%)} = \left( \frac{\text{total\_parcelado} - \text{preco\_vista}}{\text{preco\_vista}} \right) \times 100$$
+$$\text{Acrescimo} = \left( \frac{\text{total\_parcelado} - \text{preco\_vista}}{\text{preco\_vista}} \right) \times 100$$
     
   * **Posicionamento Relativo de Preço:** Criar indicador de desvio percentual do preço de cada item em relação à mediana da sua respectiva categoria.
 
