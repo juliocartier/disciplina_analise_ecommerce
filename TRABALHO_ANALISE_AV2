@@ -1,0 +1,186 @@
+# TRABALHO DA DISCIPLINA DE ANÁLISE PREDITIVA DE VENDAS NO E-COMMERCE
+
+### Prof. Me. Julio Cartier Maia Gomes
+### Valor Total: 5,0 pontos
+### Formato: (Até 3 pessoas)
+### Prazo Limite de Entrega: 17 de novembro, até as 23h59
+### Apresentação do Trabalho: 18 de novembro, horário da aula
+### Ambiente de Desenvolvimento: Fica a critério (Google Colab, Visual Studio Code, Jupyter Notebook em formato .ipynb).
+
+## 1. Contexto e Objetivo Geral
+
+No ecossistema de e-commerce, a precificação dinâmica, a competitividade entre lojistas e a qualidade cadastral dos anúncios determinam diretamente a conversão em vendas e a margem de lucro.
+
+O objetivo deste trabalho prático é aplicar técnicas de **Engenharia de Dados (ETL/Web Scraping)**, **Limpeza e Tratamento de Dados (Data Wrangling)** e **Análise Exploratória de Dados (EDA)**, **Aplicação de Normalizadores** se for necessário e **Aplicação dos algoritmos de predição** em dados reais extraídos de um comparador de preços de livre escolha.
+
+Cada grupo deverá selecionar **quatro (4) categorias distintas** para realizar a extração, estruturação e análise comparativa.
+
+
+---
+
+## 2. Categorias Disponíveis
+
+Cada grupo deve selecionar exatamente quatro categorias da lista abaixo:
+
+1. Celulares e Smartphones
+2. TVs
+3. Notebooks
+4. Ar-Condicionados
+5. Lavadoras
+6. Geladeiras
+7. Câmeras e Filmadoras
+8. Eletroportáteis
+9. Games
+10. Cama, Mesa e Banho
+
+---
+
+## 3. Esquema Canônico dos Dados (Schema)
+
+Os dados capturados devem ser estruturados em um DataFrame do Pandas. Como a estrutura exata variará dependendo do comparador de preços escolhido para a extração, o dicionário abaixo serve apenas como um exemplo ilustrativo.
+
+É obrigatório que o esquema final contenha, no mínimo, o valor do produto e a sua categoria. É permitido adicionar novos campos caso o anúncio forneça informações complementares relevantes; da mesma forma, campos exemplificados que não sejam disponibilizados pela plataforma escolhida podem ser ajustados ou omitidos.
+
+Exemplo de dicionário:
+
+``` py
+item = {
+    'loja': dado.get('sellerName') or dado.get('merchantName'),
+    'preco_vista': dado.get('price'), # Campo obrigatório
+    'nome_anuncio': dado.get('name'),
+    'id_oferta': dado.get('id'),
+    'preco_total': dado.get('totalPrice'),
+    'qtd_parcelas': dado.get('numParcels'),
+    'valor_parcela': dado.get('parcelValue'),
+    'total_parcelado': dado.get('totalParceledValue'),
+    'tem_juros': dado.get('hasInterest'),
+    'marketplace': dado.get('sellerIsMarketplace'),
+    'estoque': dado.get('stock'),
+    'indice_competitividade': dado.get('competitivenessIndex'),
+    'desconto_perc': dado.get('loweringPercentage'),
+    'url_imagem': dado.get('imageUrl'),
+    'categoria': 'Nome da Categoria Escolhida'  # Coluna discriminadora obrigatória
+}
+```
+
+---
+
+## 4. Etapas de Execução e Entregáveis
+
+O trabalho está estruturado em 4 etapas cumulativas e obrigatórias:
+
+### Etapa 1: Coleta e Pipeline de Ingestão (Peso: 1 ponto)
+* Implementação do pipeline de extração automatizada (via requisições HTTP / scraping com paginação) para as duas categorias escolhidas.
+* Coleta de volume representativo (recomenda-se extrair no mínimo de 5 a 10 páginas por categoria).
+* Consolidação em DataFrame único contendo a coluna `categoria`.
+* Mapear e reportar o percentual de dados faltantes em cada coluna (`df.isna().mean() * 100`).
+* Tratamento documentado de valores ausentes.
+* Extrair ao menos uma especificação técnica (ex.: Armazenamento em GB para celulares/notebooks; Voltagem 110V/220V/Bivolt para eletrodomésticos; Polegadas " para TVs; BTUs para Ar-Condicionado).
+
+### Etapa 2: Análise Descritiva, Exploração Estatística e Visualização dos Dados (Peso: 1 ponto)
+
+* Geração do sumário estatístico (df.describe()) detalhando média, mediana, quartis, desvio padrão, valores mínimos e máximos das variáveis numéricas (ex: preco_vista, desconto_perc, valor_parcela).
+
+* Plotagem de gráficos de distribuição (Histogramas ou gráficos de densidade) para entender o comportamento e a assimetria dos preços nos dados coletados.
+
+* Utilização de Boxplots comparativos (agrupando por categoria) para visualizar a variância dos preços e identificar eventuais outliers (valores atípicos).
+
+* Criação de visualizações para variáveis categóricas, como gráficos de barras ilustrando as lojas (sellers) com maior volume de ofertas, ou a distribuição da especificação técnica extraída na Etapa 1 (ex: quantidade de notebooks por capacidade de memória).
+
+* Registro de Insights (Obrigatório): Cada gráfico ou tabela gerada deve estar acompanhado de um breve parágrafo em texto (Markdown) interpretando os resultados sob a ótica do negócio (ex: "A loja X domina o volume de ofertas, mas apresenta os preços médios mais altos").
+
+### Etapa 3: Aplicação de Normalização e Algoritmo de Predição (Peso: 1,5 Pontos)
+
+* Pré-processamento e Encoding: Conversão das variáveis categóricas (como loja, categoria e a especificação técnica extraída na Etapa 1) em formato numérico legível para a máquina, utilizando técnicas como One-Hot Encoding (pd.get_dummies) ou Label Encoding.
+
+* Normalização ou Padronização: Aplicação de técnicas de escalonamento nas variáveis numéricas contínuas (utilizando MinMaxScaler, StandardScaler ou RobustScaler). O aluno deve incluir um breve comentário justificando o método escolhido.
+
+* Divisão do Dataset (Train/Test Split): Separação dos dados em conjuntos de treinamento e teste (ex: proporção 70/30 ou 80/20), garantindo a reprodutibilidade definindo uma semente aleatória (random_state).
+
+* Treinamento do Algoritmo: Escolha, instanciação e treinamento de pelo menos um algoritmo de aprendizado de máquina focado em regressão (ex: Regressão Linear, Árvore de Decisão, Random Forest Regressor ou XGBoost) tendo o preco_vista (ou outro campo financeiro) como variável alvo (target).
+
+* Avaliação de Performance do Modelo: Extração e apresentação clara das métricas de erro do modelo utilizando os dados de teste. É obrigatório apresentar ao menos duas métricas de regressão, como MAE (Erro Médio Absoluto), RMSE (Raiz do Erro Quadrático Médio) e R² (Coeficiente de Determinação).
+
+* Conclusão e Interpretação: Um parágrafo final explicando o resultado do modelo (ex: "O modelo erra o preço, em média, em R$ 50,00"), se o desempenho foi satisfatório e quais características (features) aparentam ter maior peso para a definição do preço.
+
+### Etapa 4: Apresentação do Trabalho (Peso: 1,5 Pontos)
+
+* **Data da Apresentação: 18 de novembro.**
+
+* Narrativa de Dados (Data Storytelling): A apresentação deve contar a história do projeto do início ao fim. O grupo deve contextualizar a coleta de dados, evidenciar os gráficos mais impactantes da etapa exploratória e apresentar os resultados do modelo preditivo de forma coesa.
+
+* Visão Executiva e Foco no Negócio: A apresentação não é uma revisão de código. A equipe deve simular um reporte executivo de resultados. O foco da avaliação será 100% no valor gerado: quais foram os insights de mercado identificados, como os concorrentes se comportam e como o modelo desenvolvido ajuda, na prática, a melhorar a competitividade e a tomada de decisão de precificação de um lojista. Explicações de sintaxe de código ou funções de bibliotecas devem ser omitidas.
+
+* Material de Apoio Visual: Utilização de slides bem estruturados (PowerPoint, Canva, etc.) ou uma apresentação fluida e limpa diretamente no Jupyter Notebook (ou Dashboard), garantindo que os gráficos e resultados estejam com aspecto profissional e plenamente legíveis para a turma.
+
+* Participação Integrada: Todos os membros do grupo devem obrigatoriamente conduzir uma parte da apresentação e demonstrar domínio sobre o projeto como um todo (desde a engenharia de dados até o machine learning).
+
+* Gestão de Tempo: As equipes devem respeitar rigorosamente o tempo limite estipulado para a apresentação, que será entre 20 e 25 minutos por grupo, havendo mais 5 minutos dedicados exclusivamente às dúvidas e questionamentos do professor.
+
+* Arguição (Q&A): Durante os 5 minutos finais, o grupo será avaliado pela capacidade de defender seu projeto, respondendo de forma segura e coerente aos questionamentos de negócio e justificativas técnicas levantados pelo professor.
+
+
+---
+
+## 5. Rubrica de Avaliação e Critérios de Correção
+
+O trabalho possui o valor total de **5,0 pontos**, distribuídos ao longo das 4 etapas. A avaliação levará em consideração não apenas a execução do código, mas a capacidade analítica, a documentação e a visão de negócios do grupo.
+
+### Resumo da Distribuição de Pontos
+| Etapa | Descrição | Peso Máximo |
+| :--- | :--- | :---: |
+| **Etapa 1** | Coleta, Ingestão e Tratamento de Dados | 1,0 pt |
+| **Etapa 2** | Análise Exploratória e Visualização (EDA) | 1,0 pt |
+| **Etapa 3** | Pré-processamento e Modelagem Preditiva | 1,5 pts |
+| **Etapa 4** | Apresentação e Arguição (Data Storytelling) | 1,5 pts |
+| **TOTAL** | | **5,0 pts** |
+
+---
+
+### Detalhamento dos Critérios (O que será avaliado)
+
+#### Etapa 1: Coleta e Pipeline de Ingestão (1,0 Ponto)
+| Critério | Excelente (100%) | Parcial/Incompleto (50%) | Insuficiente (0%) |
+| :--- | :--- | :--- | :--- |
+| **Web Scraping e Estruturação** | Pipeline funcional, coletando volume adequado (5-10 págs) e dataframe consolidado com a coluna `categoria`. | Pipeline apresenta falhas, coleta volume muito baixo, ou não consolida a coluna `categoria` corretamente. | Pipeline não funciona ou os dados não foram coletados de forma automatizada. |
+| **Qualidade e Limpeza (Nulos)** | Mapeamento explícito (`df.isna().mean()`) e tratamento justificado documentado para todas as colunas com faltantes. | Fez o mapeamento, mas o tratamento foi genérico (ex: apagou tudo sem justificar) ou mal documentado. | Não verificou ou não tratou dados nulos. |
+| **Engenharia de Features** | Extraiu e limpou perfeitamente ao menos uma especificação técnica relevante (GB, Voltagem, Polegadas, etc.). | Extraiu a especificação técnica, mas ela contém sujeiras de texto não tratadas. | Não extraiu especificações técnicas. |
+
+#### Etapa 2: Análise Exploratória (1,0 Ponto)
+| Critério | Excelente (100%) | Parcial/Incompleto (50%) | Insuficiente (0%) |
+| :--- | :--- | :--- | :--- |
+| **Estatística e Gráficos** | Apresenta `describe()`, histogramas/densidade, boxplots comparativos e gráficos de barras perfeitamente legíveis. | Apresenta os gráficos, mas faltam formatações (títulos, rótulos) ou esqueceu algum dos gráficos obrigatórios. | Não gerou gráficos ou gerou visualizações incompreensíveis. |
+| **Registro de Insights (Negócios)** | Todos os gráficos acompanham um parágrafo claro em Markdown interpretando os dados para o negócio. | Interpretou apenas alguns gráficos ou fez interpretações puramente matemáticas (sem visão de negócio). | Apenas jogou os gráficos no notebook sem nenhuma explicação ou texto de apoio. |
+
+#### Etapa 3: Modelagem Preditiva (1,5 Pontos)
+| Critério | Excelente (100%) | Parcial/Incompleto (50%) | Insuficiente (0%) |
+| :--- | :--- | :--- | :--- |
+| **Pré-processamento** | Encoding correto das categóricas, normalização/padronização aplicada com justificativa e *Split* feito com `random_state`. | Aplicou transformações com pequenos erros lógicos ou vazamento de dados, ou faltou a justificativa da normalização. | Não preparou os dados corretamente, inviabilizando ou enviesando o algoritmo. |
+| **Treinamento e Avaliação** | Treinou um modelo de regressão válido, extraiu no mínimo 2 métricas (MAE, RMSE, R²) e as apresentou com clareza nos dados de teste. | Treinou o modelo, mas apresentou apenas 1 métrica, ou avaliou de forma incorreta (ex: usando dados de treino). | O modelo não compila ou não gera predições numéricas válidas. |
+| **Conclusão do Modelo** | Parágrafo final excelente, explicando o erro do modelo em Reais (R$) e destacando as variáveis de maior peso. | Conclusão muito rasa, sem traduzir as métricas de erro para a realidade do negócio. | Ausência de conclusão técnica. |
+
+#### Etapa 4: Apresentação Final - Dia 18/Nov (1,5 Pontos)
+| Critério | Excelente (100%) | Parcial/Incompleto (50%) | Insuficiente (0%) |
+| :--- | :--- | :--- | :--- |
+| **Data Storytelling e Foco** | Apresentação cativante, focada no impacto para o negócio. Gráficos em destaque. Conta a jornada dos dados. | Apresentação muito focada em leitura de código, com pouco foco no "porquê" das decisões de negócio. | Apresentação desestruturada, apenas lendo a tela de código sem contexto. |
+| **Postura e Gestão de Tempo** | Todos os membros falam, demonstrando domínio integrado do todo. Respeita o tempo de 20 a 25 min, mais os 5 min de Q&A. | Nem todos participaram ou houve estouro/falta significativa do limite de tempo estabelecido. | Grupo não se preparou; apresentação caótica ou domínio centralizado em apenas 1 aluno. |
+| **Arguição (Q&A)** | Responde às perguntas do professor com clareza, justificando as decisões técnicas e de negócios com segurança. | Responde com insegurança, evidenciando que compreende apenas uma parte isolada do trabalho. | Não consegue explicar o código ou as decisões tomadas pelo próprio grupo. |
+
+---
+
+## 6. Instruções de Entrega
+
+1. Prazo Improrrogável: 17 de novembro, até as 23h59. Em caso de atraso, haverá uma penalidade de 0,5 Ponto na nota final a cada dia corrido de atraso.
+
+2. Arquivos Exigidos:
+
+    * Notebook executado com todos os outputs pré-renderizados (.ipynb).
+    * Base de dados tratada/coletada no formato .csv.
+
+3. Originalidade: Códigos clonados, duplicados ou com plágio detectado entre as equipes receberão nota 0,0 (zero) para todos os envolvidos.
+
+4. Envio do Projeto: O envio deve ser feito para um dos e-mails institucional ou pessoal (juliocartier@gmail.com ou juliogomes@ce.senac.br).
+
+    * Assunto do e-mail: **TRABALHO ANALISE PREDITIVA - [NOME DO REPRESENTANTE DA EQUIPE]**
+
+    * Corpo do e-mail: É obrigatório listar o nome completo de todos os membros do trio para a correta atribuição da nota. 
