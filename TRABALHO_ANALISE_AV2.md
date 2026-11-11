@@ -70,7 +70,7 @@ item = {
 O trabalho está estruturado em 4 etapas cumulativas e obrigatórias:
 
 ### Etapa 1: Coleta e Pipeline de Ingestão (Peso: 1 ponto)
-* Implementação do pipeline de extração automatizada (via requisições HTTP / scraping com paginação) para as duas categorias escolhidas.
+* Implementação do pipeline de extração automatizada (via requisições HTTP / scraping com paginação) para as quatro categorias escolhidas.
 * Coleta de volume representativo (recomenda-se extrair no mínimo de 5 a 10 páginas por categoria).
 * Consolidação em DataFrame único contendo a coluna `categoria`.
 * Mapear e reportar o percentual de dados faltantes em cada coluna (`df.isna().mean() * 100`).
